@@ -8,6 +8,10 @@ use rtrtr::config::Config;
 
 
 fn _main() -> Result<(), ExitError> {
+    let crypto_provider = tokio_rustls::rustls::crypto::ring::default_provider();
+    crypto_provider
+        .install_default()
+        .map_err(|_| ExitError::default())?;
     Logger::init_logging()?;
     let matches = Config::config_args(
         Command::new("rtrtr")
